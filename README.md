@@ -3,6 +3,9 @@ This project is to facilitate hosting [SonarQube](https://www.sonarqube.org/) in
 
 This project uses the Azure SQL database.
 
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
+Microsoft.Template deploy:
 [![Deploy Button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fddkserv%2FSonarQube-AzureAppService-AzureDatabase%2Fmaster%2Fazuredeploy.json)
 
 ## Getting Started
