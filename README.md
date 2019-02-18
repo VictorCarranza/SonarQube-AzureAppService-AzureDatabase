@@ -3,7 +3,7 @@ This project is to facilitate hosting [SonarQube](https://www.sonarqube.org/) in
 
 This project uses the Azure SQL database.
 
-[![Visualize button](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2ddkserv%2FSonarQube-AzureAppService-AzureDatabase%2Fmaster%2Fazuredeploy.json)
+[![Deploy Button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fddkserv%2FSonarQube-AzureAppService-AzureDatabase%2Fmaster%2Fazuredeploy.json)
 
 ## Getting Started
 Use the ***Deploy to Azure*** button above to deploy out an Azure App Service along with the additional files from this project. SonarQube may take up to 10 minutes to start the first time.
