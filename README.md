@@ -3,9 +3,6 @@ This project is to facilitate hosting [SonarQube](https://www.sonarqube.org/) in
 
 This project uses the Azure SQL database.
 
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
-
-[![Deploy Button](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fddkserv%2FSonarQube-AzureAppService-AzureDatabase%2Fmaster%2Fazuredeploy.json)
 [![Visualize button](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2ddkserv%2FSonarQube-AzureAppService-AzureDatabase%2Fmaster%2Fazuredeploy.json)
 
 ## Getting Started
@@ -34,3 +31,7 @@ Some alternative hosting methods are below with the relevant links.
 **IIS as a Reverse Proxy**  
 <https://blogs.msdn.microsoft.com/visualstudioalmrangers/2016/06/04/running-sonarqube-behind-an-iis-reversed-proxy/>  
 <https://jessehouwing.net/sonarqube-configure-ssl-on-windows/>
+
+## Credits
+
+https://github.com/vanderby/SonarQube-AzureAppService
