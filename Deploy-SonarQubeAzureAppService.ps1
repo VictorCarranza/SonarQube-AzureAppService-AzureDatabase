@@ -24,26 +24,19 @@ Write-Output 'Extraction complete'
 
 Write-Output 'Connection Strings Replacement'
 $connectionString = $env:SQLAZURECONNSTR_jdbcConnString
-$newConnectionString = "sonar.jdbc.url=" + $connectionString
-$sqConnStringToReplace = "#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true"
 
 $connectionUsername = $env:SQLAZURECONNSTR_jdbcUserName
-$connectionUsernameStringToReplace = "#?sonar.jdbc.username="
-$newconnectionUsername = "sonar.jdbc.username=" + $connectionUsername
 
 $connectionPassword = $env:SQLAZURECONNSTR_jdbcUserPassword
-$connectionPasswordStringToReplace = "#?sonar.jdbc.password="
-$newconnectionPassword = "sonar.jdbc.password=" + $connectionPassword
 
 $propFile = Get-ChildItem -path '..\wwwroot' -Include 'sonar.properties' -Recurse
 if(!$propFile) {
     Write-Output 'Connection Strings Replacement Failed'
     exit
-} else {
-	(Get-Content -Path $propFile.FullName -Raw) | Foreach-Object {
-		$_ -replace '$sqConnStringToReplace', "$newConnectionString" `
-		   -replace '$connectionUsernameStringToReplace', "$newconnectionUsername" `
-		   -replace '$connectionPasswordStringToReplace', "$newconnectionPassword"
-		} | Set-Content $propFile.FullName	
-    Write-Output 'Connection Strings Replacement complete'
 }
+(Get-Content -Path $propFile.FullName -Raw) | Foreach-Object {
+	$_ -ireplace '#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true', "sonar.jdbc.url=$connectionString" `
+	   -ireplace '#?sonar.web.port=.+', "sonar.web.port=$port" `
+	   -ireplace '#?sonar.jdbc.username=', "sonar.jdbc.username=$connectionUsername" `
+	   -ireplace '#?sonar.jdbc.password=', "sonar.jdbc.password=$connectionPassword"
+	} | Set-Content $propFile.FullName	

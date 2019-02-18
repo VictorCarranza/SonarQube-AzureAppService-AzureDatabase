@@ -9,16 +9,8 @@ $port = $env:HTTP_PLATFORM_PORT
 log("HTTP_PLATFORM_PORT is: $port")
 
 $connectionString = $env:SQLAZURECONNSTR_jdbcConnString
-$newConnectionString = "sonar.jdbc.url=" + $connectionString
-$sqConnStringToReplace = "#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true"
-
 $connectionUsername = $env:SQLAZURECONNSTR_jdbcUserName
-$connectionUsernameStringToReplace = "#?sonar.jdbc.username="
-$newconnectionUsername = "sonar.jdbc.username=" + $connectionUsername
-
 $connectionPassword = $env:SQLAZURECONNSTR_jdbcUserPassword
-$connectionPasswordStringToReplace = "#?sonar.jdbc.password="
-$newconnectionPassword = "sonar.jdbc.password=" + $connectionPassword
 
 log('Searching for sonar.properties file')
 $propFile = Get-ChildItem 'sonar.properties' -Recurse
@@ -29,10 +21,10 @@ if(!$propFile) {
 log("File found at: $($propFile.FullName)")
 log("Writing to sonar.properties file")
 (Get-Content -Path $propFile.FullName -Raw) | Foreach-Object {
-	$_ -replace '$sqConnStringToReplace', "$newConnectionString" `
-	   -replace '#?sonar.web.port=.+', "sonar.web.port=$port" `
-	   -replace '$connectionUsernameStringToReplace', "$newconnectionUsername" `
-	   -replace '$connectionPasswordStringToReplace', "$newconnectionPassword"
+	$_ -ireplace '#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true', "sonar.jdbc.url=$connectionString" `
+	   -ireplace '#?sonar.web.port=.+', "sonar.web.port=$port" `
+	   -ireplace '#?sonar.jdbc.username=', "sonar.jdbc.username=$connectionUsername" `
+	   -ireplace '#?sonar.jdbc.password=', "sonar.jdbc.password=$connectionPassword"
 	} | Set-Content $propFile.FullName	
 
 log('Searching for wrapper.conf file')
