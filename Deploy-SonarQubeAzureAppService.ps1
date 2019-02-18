@@ -38,7 +38,10 @@ if(!$propFile) {
     Write-Output 'Connection Strings Replacement Failed'
     exit
 } else {
-    $configContents = Get-Content -Path $propFile.FullName -Raw
-    $configContents -ireplace '$sqConnStringToReplace', "$newConnectionString" | $configContents -ireplace '$connectionUsernameStringToReplace', "$newconnectionUsername" | $configContents -ireplace '$connectionPasswordStringToReplace', "$newconnectionPassword" | Set-Content -Path $propFile.FullName
+	(Get-Content -Path $propFile.FullName -Raw) | Foreach-Object {
+		$_ -replace '$sqConnStringToReplace', "$newConnectionString" `
+		   -replace '$connectionUsernameStringToReplace', "$newconnectionUsername" `
+		   -replace '$connectionPasswordStringToReplace', "$newconnectionPassword"
+		} | Set-Content $propFile.FullName	
     Write-Output 'Connection Strings Replacement complete'
 }
