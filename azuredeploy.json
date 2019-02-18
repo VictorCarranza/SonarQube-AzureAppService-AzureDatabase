@@ -159,17 +159,17 @@
                     "connectionStrings": [
                         {
                             "name": "jdbcConnStringFull",
-                            "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require', ';User ID=', variables('sqlServerAdminUser'), '@', variables('sqlServerName'), ';Password=', variables('sqlServerAdminPassword'), ';Encrypt=True;TrustServerCertificate=False;Connection Timeout=130;')]",
+                            "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require', ';User ID=', parameters('sqlServerAdminUser'), '@', variables('sqlServerName'), ';Password=', parameters('sqlServerAdminPassword'), ';Encrypt=True;TrustServerCertificate=False;Connection Timeout=130;')]",
                             "type": "SQLAzure"
                         },
                         {
                             "name": "jdbcUserName",
-                            "connectionString": "[concat(variables('sqlServerAdminUser'), '@', variables('sqlServerName'))]",
+                            "connectionString": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]",
                             "type": "SQLAzure"
                         },
                         {
                             "name": "jdbcUserPassword",
-                            "connectionString": "[variables('sqlServerAdminPassword')]",
+                            "connectionString": "[parameters('sqlServerAdminPassword')]",
                             "type": "SQLAzure"
                         },
 						{
@@ -208,8 +208,8 @@
             	"displayName": "sonarqsl"
             },
             "properties": {
-            	"administratorLogin": "[variables('sqlServerAdminUser')]",
-				"administratorLoginPassword": "[variables('sqlServerAdminPassword')]",
+            	"administratorLogin": "[parameters('sqlServerAdminUser')]",
+				"administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
 				"version": "12.0"
             },
             "resources": [
@@ -267,11 +267,11 @@
 		},
 		"jdbcUserName":{
 		  "type": "string",
-		  "value": "[concat(variables('sqlServerAdminUser'), '@', variables('sqlServerName'))]"
+		  "value": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]"
 		},
 		"jdbcUserPassword":{
 		  "type": "string",
-		  "value": "[variables('sqlServerAdminPassword')]"
+		  "value": "[parameters('sqlServerAdminPassword')]"
 		}
 	}
 }
