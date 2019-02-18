@@ -23,6 +23,8 @@ Expand-Archive -Path $outputFile -DestinationPath ..\wwwroot
 Write-Output 'Extraction complete'
 
 Write-Output 'Connection Strings Replacement'
+$port = "9000"
+
 $connectionString = $env:SQLAZURECONNSTR_jdbcConnString
 
 $connectionUsername = $env:SQLAZURECONNSTR_jdbcUserName

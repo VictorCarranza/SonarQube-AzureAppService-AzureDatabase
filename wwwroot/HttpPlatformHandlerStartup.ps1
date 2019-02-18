@@ -1,7 +1,6 @@
 ﻿function log($message) {
-	## Uncomment 2 below lines for Debug info.
-    ##[DateTime]$dateTime = [System.DateTime]::Now
-    ##Write-Output "$($dateTime.ToLongTimeString()) $message" 
+    [DateTime]$dateTime = [System.DateTime]::Now
+    Write-Output "$($dateTime.ToLongTimeString()) $message" 
 }
 
 log('Starting HttpPlatformHandler Script')
