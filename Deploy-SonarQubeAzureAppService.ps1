@@ -25,12 +25,14 @@ Write-Output 'Extraction complete'
 Write-Output 'Connection Strings Replacement'
 $connectionString = $env:SQLAZURECONNSTR_jdbcConnString
 $newConnectionString = "sonar.jdbc.url=" + $connectionString
-$sqConnStringToReplace = "#sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true"
+$sqConnStringToReplace = "#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true"
+
 $connectionUsername = $env:SQLAZURECONNSTR_jdbcUserName
-$connectionUsernameStringToReplace = "#sonar.jdbc.username="
+$connectionUsernameStringToReplace = "#?sonar.jdbc.username="
 $newconnectionUsername = "sonar.jdbc.username=" + $connectionUsername
+
 $connectionPassword = $env:SQLAZURECONNSTR_jdbcUserPassword
-$connectionPasswordStringToReplace = "#sonar.jdbc.password="
+$connectionPasswordStringToReplace = "#?sonar.jdbc.password="
 $newconnectionPassword = "sonar.jdbc.password=" + $connectionPassword
 
 $propFile = Get-ChildItem -path '..\wwwroot' -Include 'sonar.properties' -Recurse
