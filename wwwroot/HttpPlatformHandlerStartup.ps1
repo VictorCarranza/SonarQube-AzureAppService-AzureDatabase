@@ -1,5 +1,5 @@
 ﻿function log($message) {
-	## Uncomment below for Debug info
+	## Uncomment 2 below lines for Debug info.
     ##[DateTime]$dateTime = [System.DateTime]::Now
     ##Write-Output "$($dateTime.ToLongTimeString()) $message" 
 }
