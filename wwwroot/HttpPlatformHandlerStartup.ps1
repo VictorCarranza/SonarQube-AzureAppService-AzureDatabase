@@ -1,6 +1,7 @@
 ﻿function log($message) {
-    [DateTime]$dateTime = [System.DateTime]::Now
-    Write-Output "$($dateTime.ToLongTimeString()) $message" 
+	## Uncomment below for Debug info
+    ##[DateTime]$dateTime = [System.DateTime]::Now
+    ##Write-Output "$($dateTime.ToLongTimeString()) $message" 
 }
 
 log('Starting HttpPlatformHandler Script')
@@ -23,8 +24,8 @@ log("Writing to sonar.properties file")
 (Get-Content -Path $propFile.FullName -Raw) | Foreach-Object {
 	$_ -ireplace '#?sonar.jdbc.url=jdbc:sqlserver://localhost;databaseName=sonar;integratedSecurity=true', "sonar.jdbc.url=$connectionString" `
 	   -ireplace '#?sonar.web.port=.+', "sonar.web.port=$port" `
-	   -ireplace '#?sonar.jdbc.username=', "sonar.jdbc.username=$connectionUsername" `
-	   -ireplace '#?sonar.jdbc.password=', "sonar.jdbc.password=$connectionPassword"
+	   -ireplace '#?sonar.jdbc.username=.*', "sonar.jdbc.username=$connectionUsername" `
+	   -ireplace '#?sonar.jdbc.password=.*', "sonar.jdbc.password=$connectionPassword"
 	} | Set-Content $propFile.FullName	
 
 log('Searching for wrapper.conf file')
