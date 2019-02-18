@@ -101,7 +101,7 @@
             }
 		},
 		"sqlServerAdminPassword": {
-            "type": "securestring",
+            "type": "string",
             "metadata": {
                 "description": "Password for Azure SQL Server Admin account"
             }
