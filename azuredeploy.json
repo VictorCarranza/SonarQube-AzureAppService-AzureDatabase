@@ -10,8 +10,11 @@
 			"defaultValue": "sonarqube"
         },
         "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]"
+			"type": "string",
+			"defaultValue": "North Europe",
+			"metadata": {
+                "description": "Location for all resources."
+			}
         },
         "webAppSku": {
             "defaultValue": "S1",
