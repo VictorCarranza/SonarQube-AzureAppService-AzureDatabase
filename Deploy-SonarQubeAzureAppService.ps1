@@ -33,7 +33,7 @@ $connectionPassword = $env:SQLAZURECONNSTR_jdbcUserPassword
 $connectionPasswordStringToReplace = "#sonar.jdbc.password="
 $newconnectionPassword = "sonar.jdbc.password=" + $connectionPassword
 
-$propFile = Get-ChildItem 'sonar.properties' -Recurse
+$propFile = Get-ChildItem -path '..\wwwroot' -Include 'sonar.properties' -Recurse
 if(!$propFile) {
     Write-Output 'Connection Strings Replacement Failed'
     exit
