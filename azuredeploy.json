@@ -141,9 +141,6 @@
       "name": "[variables('WebAppName')]",
       "type": "Microsoft.Web/sites",
       "location": "[parameters('location')]",
-      "tags": {
-        "displayName": "sonarwebapp"
-      },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms/', variables('appServiceName'))]",
         "[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]"
@@ -271,7 +268,7 @@
       "apiVersion": "2015-05-01",
       "location": "[parameters('location')]",
       "tags": {
-        "displayName": "sonar"
+        "displayName": "sonarqubeAppInsights"
       },
       "properties": {
         "Application_Type": "web"
