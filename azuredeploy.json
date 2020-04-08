@@ -11,7 +11,7 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "East US",
+      "defaultValue": "North Europe",
       "metadata": {
         "description": "Location for all resources."
       }
@@ -267,9 +267,7 @@
       "name": "[variables('applicationInsightsName')]",
       "apiVersion": "2015-05-01",
       "location": "[parameters('location')]",
-      "tags": {
-        "displayName": "sonarqubeAppInsights"
-      },
+      "tags": {},
       "properties": {
         "Application_Type": "web"
       },
