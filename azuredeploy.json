@@ -1,291 +1,291 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "projectName": {
-      "type": "string",
-      "metadata": {
-        "description": "projectName name, should be lowercase"
-      },
-      "defaultValue": "sonarqube"
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "North Europe",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
-    "webAppSku": {
-      "defaultValue": "S1",
-      "allowedValues": [
-        "B1",
-        "B2",
-        "B3",
-        "S1",
-        "S2",
-        "S3",
-        "P1",
-        "P2",
-        "P3",
-        "P4"
-      ],
-      "type": "string"
-    },
-    "sqldatabaseSKU": {
-      "type": "string",
-      "defaultValue": "S1",
-      "allowedValues": [
-        "Basic",
-        "S0",
-        "S1",
-        "S2",
-        "S3",
-        "S4",
-        "P0",
-        "P1",
-        "P2",
-        "P4",
-        "GP_GEN4_1",
-        "GP_GEN4_2",
-        "GP_GEN4_4",
-        "GP_GEN4_8",
-        "GP_GEN4_16",
-        "GP_GEN4_24",
-        "BC_GEN4_1",
-        "BC_GEN4_2",
-        "BC_GEN4_4",
-        "BC_GEN4_8",
-        "BC_GEN4_16",
-        "BC_GEN4_24",
-        "GP_GEN5_2",
-        "GP_GEN5_4",
-        "GP_GEN5_8",
-        "GP_GEN5_16",
-        "GP_GEN5_24",
-        "GP_GEN5_32",
-        "GP_GEN5_48",
-        "GP_GEN5_80",
-        "BC_GEN5_2",
-        "BC_GEN5_4",
-        "BC_GEN5_8",
-        "BC_GEN5_16",
-        "BC_GEN5_24",
-        "BC_GEN5_32",
-        "BC_GEN5_48",
-        "BC_GEN5_80"
-      ],
-      "metadata": {
-        "description": "Describes the performance level for Edition"
-      }
-    },
-    "sqlDatabaseEdition": {
-      "type": "string",
-      "defaultValue": "Standard",
-      "allowedValues": [
-        "Basic",
-        "Standard",
-        "Premium",
-        "GeneralPurpose",
-        "BusinessCritical"
-      ],
-      "metadata": {
-        "description": "The SQL server edition"
-      }
-    },
-    "sqlServerAdminUser": {
-      "type": "string",
-      "minLength": 1,
-      "metadata": {
-        "description": "Admin account name for Azure SQL Server"
-      }
-    },
-    "sqlServerAdminPassword": {
-      "type": "string",
-      "metadata": {
-        "description": "Password for Azure SQL Server Admin account"
-      }
-    },
-    "repoUrl": {
-      "type": "string",
-      "defaultValue": "https://github.com/ddkserv/SonarQube-AzureAppService-AzureDatabase.git"
-    },
-    "branch": {
-      "type": "string",
-      "defaultValue": "master"
-    }
-  },
-  "variables": {
-    "sonarCollation": "Latin1_General_100_CS_AS",
-    "appServiceName": "[parameters('projectName')]",
-    "sqlServerName": "[concat(parameters('projectName'), '-sql')]",
-    "databaseName": "[concat(parameters('projectName'), '-db')]",
-    "WebAppName": "[parameters('projectName')]",
-    "applicationInsightsName": "[parameters('projectName')]"
-  },
-  "resources": [
-    {
-      "apiVersion": "2016-09-01",
-      "name": "[variables('appServiceName')]",
-      "type": "Microsoft.Web/serverfarms",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[parameters('webAppSku')]"
-      },
-      "properties": {
-        "name": "[variables('appServiceName')]"
-      }
-    },
-    {
-      "apiVersion": "2016-08-01",
-      "name": "[variables('WebAppName')]",
-      "type": "Microsoft.Web/sites",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms/', variables('appServiceName'))]",
-        "[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]"
-      ],
-      "properties": {
-        "name": "[variables('WebAppName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]",
-        "clientAffinityEnabled": false,
-        "siteConfig": {
-          "appSettings": [
-            {
-              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2014-04-01').InstrumentationKey]"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "projectName": {
+            "type": "string",
+			"metadata": {
+                "description": "projectName name, should be lowercase"
+            },
+			"defaultValue": "sonarqube"
+        },
+        "location": {
+			"type": "string",
+			"defaultValue": "North Europe",
+			"metadata": {
+                "description": "Location for all resources."
+			}
+        },
+        "webAppSku": {
+            "defaultValue": "S1",
+            "allowedValues": [
+                "B1",
+                "B2",
+                "B3",
+                "S1",
+                "S2",
+                "S3",
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+            ],
+            "type": "string"
+        },
+        "sqldatabaseSKU": {
+            "type": "string",
+            "defaultValue": "S1",
+            "allowedValues": [
+                "Basic",
+                "S0",
+                "S1",
+                "S2",
+				"S3",
+				"S4",
+				"P0",
+				"P1",
+				"P2",
+				"P4",
+				"GP_GEN4_1", 
+				"GP_GEN4_2", 
+				"GP_GEN4_4", 
+				"GP_GEN4_8", 
+				"GP_GEN4_16", 
+				"GP_GEN4_24",
+				"BC_GEN4_1", 
+				"BC_GEN4_2", 
+				"BC_GEN4_4", 
+				"BC_GEN4_8", 
+				"BC_GEN4_16", 
+				"BC_GEN4_24",
+				"GP_GEN5_2", 
+				"GP_GEN5_4", 
+				"GP_GEN5_8", 
+				"GP_GEN5_16", 
+				"GP_GEN5_24", 
+				"GP_GEN5_32", 
+				"GP_GEN5_48", 
+				"GP_GEN5_80",
+				"BC_GEN5_2", 
+				"BC_GEN5_4", 
+				"BC_GEN5_8", 
+				"BC_GEN5_16", 
+				"BC_GEN5_24", 
+				"BC_GEN5_32", 
+				"BC_GEN5_48", 
+				"BC_GEN5_80"
+            ],
+            "metadata": {
+                "description": "Describes the performance level for Edition"
             }
-          ],
-          "connectionStrings": [
-            {
-              "name": "jdbcConnStringFull",
-              "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require', ';User ID=', parameters('sqlServerAdminUser'), '@', variables('sqlServerName'), ';Password=', parameters('sqlServerAdminPassword'), ';Encrypt=True;TrustServerCertificate=False;Connection Timeout=130;')]",
-              "type": "SQLAzure"
-            },
-            {
-              "name": "jdbcUserName",
-              "connectionString": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]",
-              "type": "SQLAzure"
-            },
-            {
-              "name": "jdbcUserPassword",
-              "connectionString": "[parameters('sqlServerAdminPassword')]",
-              "type": "SQLAzure"
-            },
-            {
-              "name": "jdbcConnString",
-              "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require')]",
-              "type": "SQLAzure"
+        },
+        "sqlDatabaseEdition": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+				"Premium",
+				"GeneralPurpose",
+				"BusinessCritical"
+            ],
+            "metadata": {
+                "description": "The SQL server edition"
             }
-          ]
+        },
+		"sqlServerAdminUser": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "Admin account name for Azure SQL Server"
+            }
+		},
+		"sqlServerAdminPassword": {
+            "type": "string",
+            "metadata": {
+                "description": "Password for Azure SQL Server Admin account"
+            }
+		},
+        "repoUrl": {
+            "type": "string",
+			"defaultValue": "https://github.com/ddkserv/SonarQube-AzureAppService-AzureDatabase.git"
+        },
+        "branch": {
+            "type": "string",
+			"defaultValue": "master"
         }
-      },
-      "resources": [
+    },
+	"variables": {
+		"sonarCollation": "Latin1_General_100_CS_AS",
+		"appServiceName": "[parameters('projectName')]",
+		"sqlServerName": "[concat(parameters('projectName'), '-sql')]",
+		"databaseName": "[concat(parameters('projectName'), '-db')]",
+        "WebAppName": "[parameters('projectName')]",
+		"applicationInsightsName": "[parameters('projectName')]"
+	},
+    "resources": [
         {
-          "name": "web",
-          "type": "config",
-          "apiVersion": "2016-08-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('WebAppName'))]"
-          ],
-          "properties": {
-            "alwaysOn": false,
-            "javaVersion": "11",
-            "javaContainer": "TOMCAT",
-            "javaContainerVersion": "9.0"
-          }
+            "apiVersion": "2016-09-01",
+            "name": "[variables('appServiceName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('webAppSku')]"
+            },
+            "properties": {
+                "name": "[variables('appServiceName')]"
+            }
         },
         {
-          "apiVersion": "2016-08-01",
-          "name": "web",
-          "type": "sourcecontrols",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('WebAppName'))]",
-            "[concat('Microsoft.Web/Sites/', variables('WebAppName'), '/config/web')]"
-          ],
-          "properties": {
-            "RepoUrl": "[parameters('repoUrl')]",
-            "branch": "[parameters('branch')]",
-            "IsManualIntegration": true
-          }
-        }
-      ]
-    },
-    {
-      "name": "[variables('sqlServerName')]",
-      "type": "Microsoft.Sql/servers",
-      "kind": "v12.0",
-      "location": "[parameters('location')]",
-      "apiVersion": "2014-04-01-preview",
-      "dependsOn": [],
-      "tags": {
-        "displayName": "sonarqsl"
-      },
-      "properties": {
-        "administratorLogin": "[parameters('sqlServerAdminUser')]",
-        "administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
-        "version": "12.0"
-      },
-      "resources": [
-        {
-          "name": "[uniqueString(variables('sqlServerName'), 'AllowAllWindowsAzureIps' )]",
-          "type": "firewallrules",
-          "location": "[parameters('location')]",
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]"
-          ],
-          "properties": {
-            "startIpAddress": "0.0.0.0",
-            "endIpAddress": "0.0.0.0"
-          }
+            "apiVersion": "2016-08-01",
+            "name": "[variables('WebAppName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms/', variables('appServiceName'))]",
+				"[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+            ],
+            "properties": {
+                "name": "[variables('WebAppName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]",
+                "clientAffinityEnabled": false,
+				"siteConfig": {
+					"appSettings": [
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2014-04-01').InstrumentationKey]"
+                        }
+                    ],
+                    "connectionStrings": [
+                        {
+                            "name": "jdbcConnStringFull",
+                            "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require', ';User ID=', parameters('sqlServerAdminUser'), '@', variables('sqlServerName'), ';Password=', parameters('sqlServerAdminPassword'), ';Encrypt=True;TrustServerCertificate=False;Connection Timeout=130;')]",
+                            "type": "SQLAzure"
+                        },
+                        {
+                            "name": "jdbcUserName",
+                            "connectionString": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]",
+                            "type": "SQLAzure"
+                        },
+                        {
+                            "name": "jdbcUserPassword",
+                            "connectionString": "[parameters('sqlServerAdminPassword')]",
+                            "type": "SQLAzure"
+                        },
+						{
+                            "name": "jdbcConnString",
+                            "connectionString": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require')]",
+                            "type": "SQLAzure"
+                        }
+                    ]
+				}
+            },
+            "resources": [
+                {
+                    "name": "web",
+                    "type": "config",
+                    "apiVersion": "2016-08-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', variables('WebAppName'))]"
+                    ],
+                    "properties": {
+                        "alwaysOn": false,
+                        "javaVersion": "11",
+                        "javaContainer": "TOMCAT",
+                        "javaContainerVersion": "9.0"
+                    }
+                },
+                {
+                    "apiVersion": "2016-08-01",
+                    "name": "web",
+                    "type": "sourcecontrols",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', variables('WebAppName'))]",
+                        "[concat('Microsoft.Web/Sites/', variables('WebAppName'), '/config/web')]"
+                    ],
+                    "properties": {
+                        "RepoUrl": "[parameters('repoUrl')]",
+                        "branch": "[parameters('branch')]",
+                        "IsManualIntegration": true
+                    }
+                }
+            ]
         },
         {
-          "name": "[variables('databaseName')]",
-          "type": "databases",
-          "kind": "v12.0,user",
-          "location": "[parameters('location')]",
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[variables('sqlServerName')]"
-          ],
-          "tags": {
-            "displayName": "sonar"
-          },
-          "properties": {
-            "collation": "[variables('sonarCollation')]",
-            "edition": "[parameters('sqlDatabaseEdition')]",
-            "requestedServiceObjectiveName": "[parameters('sqldatabaseSKU')]",
-            "maxSizeBytes": "1073741824"
-          }
+            "name": "[variables('sqlServerName')]",
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "location": "[parameters('location')]",
+            "apiVersion": "2014-04-01-preview",
+            "dependsOn": [],
+            "tags": {
+            	"displayName": "sonarqsl"
+            },
+            "properties": {
+            	"administratorLogin": "[parameters('sqlServerAdminUser')]",
+				"administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
+				"version": "12.0"
+            },
+            "resources": [
+				{
+				  "name": "[uniqueString(variables('sqlServerName'), 'AllowAllWindowsAzureIps' )]",
+				  "type": "firewallrules",
+				  "location": "[parameters('location')]",
+				  "apiVersion": "2014-04-01-preview",
+				  "dependsOn": [
+					"[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+				  ],
+				  "properties": {
+					"startIpAddress": "0.0.0.0",
+					"endIpAddress": "0.0.0.0"
+				  }
+				},
+				{
+				  "name": "[variables('databaseName')]",
+				  "type": "databases",
+				  "kind": "v12.0,user",
+				  "location": "[parameters('location')]",
+				  "apiVersion": "2014-04-01-preview",
+				  "dependsOn": [
+					"[variables('sqlServerName')]"
+				  ],
+				  "tags": {
+					"displayName": "sonar"
+				  },
+				  "properties": {
+					"collation": "[variables('sonarCollation')]",
+					"edition": "[parameters('sqlDatabaseEdition')]",
+					"requestedServiceObjectiveName": "[parameters('sqldatabaseSKU')]",
+					"maxSizeBytes": "1073741824"
+				  }
+				}
+            ]
+        },
+		{
+            "type": "Microsoft.Insights/components",
+            "kind": "web",
+            "name": "[variables('applicationInsightsName')]",
+            "apiVersion": "2015-05-01",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+                "Application_Type": "web"
+            },
+            "dependsOn": []
         }
-      ]
-    },
-    {
-      "type": "Microsoft.Insights/components",
-      "kind": "web",
-      "name": "[variables('applicationInsightsName')]",
-      "apiVersion": "2015-05-01",
-      "location": "[parameters('location')]",
-      "tags": {},
-      "properties": {
-        "Application_Type": "web"
-      },
-      "dependsOn": []
-    }
-  ],
-  "outputs": {
-    "jdbcConnString": {
-      "type": "string",
-      "value": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require')]"
-    },
-    "jdbcUserName": {
-      "type": "string",
-      "value": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]"
-    },
-    "jdbcUserPassword": {
-      "type": "string",
-      "value": "[parameters('sqlServerAdminPassword')]"
-    }
-  }
+    ],
+	"outputs": {
+		"jdbcConnString": {
+		  "type": "string",
+		  "value": "[concat('jdbc:sqlserver://', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ':1433;database=', variables('databaseName'), ';ssl=require')]"
+		},
+		"jdbcUserName":{
+		  "type": "string",
+		  "value": "[concat(parameters('sqlServerAdminUser'), '@', variables('sqlServerName'))]"
+		},
+		"jdbcUserPassword":{
+		  "type": "string",
+		  "value": "[parameters('sqlServerAdminPassword')]"
+		}
+	}
 }
