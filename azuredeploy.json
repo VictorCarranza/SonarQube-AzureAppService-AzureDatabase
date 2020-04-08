@@ -11,7 +11,7 @@
         },
         "location": {
 			"type": "string",
-			"defaultValue": "North Europe",
+			"defaultValue": "East US",
 			"metadata": {
                 "description": "Location for all resources."
 			}
@@ -190,7 +190,7 @@
                     ],
                     "properties": {
                         "alwaysOn": false,
-                        "javaVersion": "1.8",
+                        "javaVersion": "11",
                         "javaContainer": "TOMCAT",
                         "javaContainerVersion": "9.0"
                     }
