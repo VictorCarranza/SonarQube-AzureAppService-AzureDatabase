@@ -274,7 +274,14 @@
 					"[variables('sqlServerName')]"
 				  ],
 				  "tags": {
-					  "displayName": "sonar"
+					  "displayName": "sonar",
+					   "Application_Id":"5EC58F76582D85AD",
+					   "Application_Name":"DevOps Automation",
+					   "Cost_Center":"100501541",
+					   "Mega_Id":"5EC58F76582D85AD",
+					   "Original_Requestor":"carranza.vc@pg.com",
+					   "Owning_Role":"AZUG-Cloud-Access-Engineers",
+					   "Stage":"Nonprod"
 				  },
 				  "properties": {
 					"collation": "[variables('sonarCollation')]",
