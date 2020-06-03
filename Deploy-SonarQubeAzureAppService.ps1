@@ -19,7 +19,7 @@ Invoke-WebRequest -Uri $downloadUri -OutFile $outputFile -UseBasicParsing
 Write-Output 'Done downloading file'
 
 Write-Output 'Extracting zip'
-Expand-Archive -Path $outputFile -DestinationPath ..\wwwroot
+Expand-Archive -Path $outputFile -DestinationPath ..\wwwroot -Force
 Write-Output 'Extraction complete'
 
 Write-Output 'Connection Strings Replacement'
